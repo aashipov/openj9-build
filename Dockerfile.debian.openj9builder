@@ -1,0 +1,52 @@
+FROM debian:9
+ARG DUMMY_USER=dummy
+ARG UID_GID=10001
+ENV JAVA_HOME=/opt/jdk
+ENV PATH=${JAVA_HOME}/bin:${PATH}
+RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
+    sudo \
+    autoconf \
+    build-essential \
+    ca-certificates \
+    cmake \
+    cpio \
+    curl \
+    file \
+    g++ \
+    gcc \
+    gdb \
+    git \
+    libasound2-dev \
+    libcups2-dev \
+    libdwarf-dev \
+    libelf-dev \
+    libexpat1-dev \
+    libffi-dev \
+    libfontconfig \
+    libfontconfig1-dev \
+    libfreetype6-dev \
+    libnuma-dev \
+    libssl-dev \
+    libx11-dev \
+    libxext-dev \
+    libxrandr-dev \
+    libxrender-dev \
+    libxt-dev \
+    libxtst-dev \
+    make \
+    nasm \
+    openssh-client \
+    openssh-server \
+    perl \
+    pkg-config \
+    ssh \
+    systemtap-sdt-dev \
+    unzip \
+    wget \
+    xvfb \
+    zip \
+    zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean && \
+    groupadd -g ${UID_GID} ${DUMMY_USER} && useradd -m -u ${UID_GID} -d /${DUMMY_USER}/ -g ${DUMMY_USER} ${DUMMY_USER} && \
+    mkdir -p ${JAVA_HOME}/

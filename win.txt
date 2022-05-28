@@ -1,0 +1,9 @@
+openJDK from source on Windows
+
+Windows Server 2012
+cygwin with bash git autoconf make cmake zip unzip cpio mc
+Visual Studio 2017
+JDK 8 only: https://download.savannah.gnu.org/releases/freetype/freetype-old/freetype-2.5.3.tar.gz in ```${HOME}/dev/VCS/freetype-2.5.3```
+bootstrap jdk 8, 11 and 17 as ```${HOME}/dev/tools/openjdkXXX```
+
+Further details: https://github.com/eclipse-openj9/openj9/blob/master/doc/build-instructions/Build_Instructions_V17.md#windows

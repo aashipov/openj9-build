@@ -1,0 +1,11 @@
+FROM aashipov/openj9-build:debianopenj9builder AS downloader
+ARG OPENJDK_ARCHIVE_NAME=OpenJDK8U-jdk_x64_linux_hotspot_8u302b08.tar.gz
+ARG OPENJDK_ARCHIVE_IN_TMP=/tmp/${OPENJDK_ARCHIVE_NAME}
+ADD https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u302-b08/${OPENJDK_ARCHIVE_NAME} /tmp/
+RUN tar -xzf ${OPENJDK_ARCHIVE_IN_TMP} -C ${JAVA_HOME}/ --strip-components=1 && rm -rf ${OPENJDK_ARCHIVE_IN_TMP} && \
+find "${JAVA_HOME}" -type f -name '*.debuginfo' -exec rm {} \; && \
+find "${JAVA_HOME}" -type f -name '*.diz' -exec rm {} \; && \
+rm -rf ${JAVA_HOME}/demo/ ${JAVA_HOME}/lib/src.zip ${JAVA_HOME}/man/
+
+FROM aashipov/openj9-build:debianopenj9builder
+COPY --from=downloader ${JAVA_HOME}/ ${JAVA_HOME}/

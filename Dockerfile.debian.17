@@ -1,0 +1,11 @@
+FROM aashipov/openj9-build:debianopenj9builder AS downloader
+ARG OPENJDK_ARCHIVE_NAME=openjdk-17_linux-x64_bin.tar.gz
+ARG OPENJDK_ARCHIVE_IN_TMP=/tmp/${OPENJDK_ARCHIVE_NAME}
+ADD https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/${OPENJDK_ARCHIVE_NAME} /tmp/
+RUN tar -xzf ${OPENJDK_ARCHIVE_IN_TMP} -C ${JAVA_HOME}/ --strip-components=1 && rm -rf ${OPENJDK_ARCHIVE_IN_TMP} && \
+find "${JAVA_HOME}" -type f -name '*.debuginfo' -exec rm {} \; && \
+find "${JAVA_HOME}" -type f -name '*.diz' -exec rm {} \; && \
+rm -rf ${JAVA_HOME}/demo/ ${JAVA_HOME}/lib/src.zip ${JAVA_HOME}/man/
+
+FROM aashipov/openj9-build:debianopenj9builder
+COPY --from=downloader ${JAVA_HOME}/ ${JAVA_HOME}/
