@@ -44,6 +44,14 @@ fi
 
 bash get_source.sh -openj9-branch=${BRANCH_TO_BUILD} -omr-branch=${BRANCH_TO_BUILD}
 
+VERSION_STRING=$(awk -F" := " '{print $2}' ${JDK_DIR}/closed/openjdk-tag.gmk)
+
+MINOR_VER=$(printf ${VERSION_STRING} | cut -d'-' -f 1)
+MINOR_VER=${MINOR_VER#${JDK}${JAVA_VERSION}u}
+
+UPDATE_VER=$(printf ${VERSION_STRING} | cut -d'-' -f 2)
+UPDATE_VER=${UPDATE_VER#"b"}
+
 # https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/java8-openjdk/trunk/PKGBUILD
 # Avoid optimization of HotSpot being lowered from O3 to O2
 GCC_FLAGS="-O3"
@@ -58,6 +66,8 @@ bash configure \
 --with-extra-cflags="${GCC_FLAGS}" \
 --with-extra-cxxflags="${GCC_FLAGS}" \
 --enable-jfr=yes \
+--with-update-version="${MINOR_VER}" \
+--with-build-number="${UPDATE_VER}" \
 #--with-freetype-src=${HOME}/dev/VCS/freetype-2.5.3
 
 make clean

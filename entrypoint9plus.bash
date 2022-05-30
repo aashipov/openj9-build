@@ -44,6 +44,8 @@ fi
 
 bash get_source.sh -openj9-branch=${BRANCH_TO_BUILD} -omr-branch=${BRANCH_TO_BUILD}
 
+VERSION_STRING=$(awk -F" := " '{print $2}' ${JDK_DIR}/closed/openjdk-tag.gmk)
+
 # https://github.com/archlinux/svntogit-packages/blob/packages/java11-openjdk/trunk/PKGBUILD
 # Avoid optimization of HotSpot being lowered from O3 to O2
 GCC_FLAGS="-O3"
@@ -58,7 +60,8 @@ bash configure \
 --disable-warnings-as-errors \
 --disable-warnings-as-errors-omr \
 --disable-warnings-as-errors-openj9 \
---disable-keep-packaged-modules
+--disable-keep-packaged-modules \
+--with-version-string="${VERSION_STRING#${JDK}-}" \
 
 make clean
 STARTTIME=$(date +%s)
