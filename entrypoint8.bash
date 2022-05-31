@@ -17,7 +17,7 @@ TOP_DIR=${HOME}
 if [[ "${OSTYPE}" == "cygwin" || "${OSTYPE}" == "msys" ]]; then
   OS_TYPE="windows"
   TOP_DIR="/cygdrive/c"
-  export JAVA_HOME=${HOME}/dev/tools/openjdk${JAVA_VERSION} 
+  export JAVA_HOME=${TOP_DIR}/dev/tools/openjdk${JAVA_VERSION} 
 fi
 OS_TYPE_AND_INSTRUCTION_SET="${OS_TYPE}-${INSTRUCTION_SET}"
 JDK_DIR="${TOP_DIR}/${JDK_FLAVOR}"
@@ -68,7 +68,7 @@ bash configure \
 --enable-jfr=yes \
 --with-update-version="${MINOR_VER}" \
 --with-build-number="${UPDATE_VER}" \
-#--with-freetype-src=${HOME}/dev/VCS/freetype-2.5.3
+#--with-freetype-src=${TOP_DIR}/dev/VCS/freetype-2.5.3
 
 make clean
 make all
@@ -78,6 +78,6 @@ then
   cd ${JDK_DIR}/build/${OS_TYPE_AND_INSTRUCTION_SET}-normal-server-release/images/
   find "${PWD}" -type f -name '*.debuginfo' -exec rm {} \;
   find "${PWD}" -type f -name '*.diz' -exec rm {} \;
-  GZIP=-9 tar -chf ./${JDK_FLAVOR}-${OS_TYPE_AND_INSTRUCTION_SET}-${BRANCH_TO_BUILD}.tar.gz j2sdk-image/
-  GZIP=-9 tar -chf ./${JRE_FLAVOR}-${OS_TYPE_AND_INSTRUCTION_SET}-${BRANCH_TO_BUILD}.tar.gz j2re-image/
+  GZIP=-9 tar -chf ./${JDK_FLAVOR}-${OS_TYPE_AND_INSTRUCTION_SET}-${VERSION_STRING}-${BRANCH_TO_BUILD}.tar.gz j2sdk-image/
+  GZIP=-9 tar -chf ./${JRE_FLAVOR}-${OS_TYPE_AND_INSTRUCTION_SET}-${VERSION_STRING}-${BRANCH_TO_BUILD}.tar.gz j2re-image/
 fi

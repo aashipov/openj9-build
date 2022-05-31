@@ -17,7 +17,7 @@ TOP_DIR=${HOME}
 if [[ "${OSTYPE}" == "cygwin" || "${OSTYPE}" == "msys" ]]; then
   OS_TYPE="windows"
   TOP_DIR="/cygdrive/c"
-  export JAVA_HOME=${HOME}/dev/tools/openjdk${JAVA_VERSION}
+  export JAVA_HOME=${TOP_DIR}/dev/tools/openjdk${JAVA_VERSION}
 fi
 OS_TYPE_AND_INSTRUCTION_SET="${OS_TYPE}-${INSTRUCTION_SET}"
 JDK_DIR="${TOP_DIR}/${JDK_FLAVOR}"
@@ -80,6 +80,6 @@ then
     fi
     find "${PWD}" -type f -name '*.debuginfo' -exec rm {} \;
     find "${PWD}" -type f -name '*.diz' -exec rm {} \;
-    tar -I 'gzip -9' -chf ./${JDK_FLAVOR}-${OS_TYPE_AND_INSTRUCTION_SET}-${BRANCH_TO_BUILD}.tar.gz jdk/
-    tar -I 'gzip -9' -chf ./${JRE_FLAVOR}-${OS_TYPE_AND_INSTRUCTION_SET}-${BRANCH_TO_BUILD}.tar.gz jre/
+    tar -I 'gzip -9' -chf ./${JDK_FLAVOR}-${OS_TYPE_AND_INSTRUCTION_SET}-${VERSION_STRING}-${BRANCH_TO_BUILD}.tar.gz jdk/
+    tar -I 'gzip -9' -chf ./${JRE_FLAVOR}-${OS_TYPE_AND_INSTRUCTION_SET}-${VERSION_STRING}-${BRANCH_TO_BUILD}.tar.gz jre/
 fi
