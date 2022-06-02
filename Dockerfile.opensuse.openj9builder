@@ -1,0 +1,16 @@
+FROM opensuse/leap:15.2
+ARG DUMMY_USER=dummy
+ARG UID_GID=10001
+ENV JAVA_HOME="/opt/jvm"
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
+RUN zypper --non-interactive dup && \
+zypper --non-interactive install zip unzip gzip git make gcc gcc-c++ clang \
+libffi-devel libpulse-devel alsa-lib-devel autoconf automake bc binutils \
+cups-devel fontconfig-devel freetype2-devel \
+libX11-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libjpeg-devel libpng-devel libtool libxslt \
+pkgconfig xorg-x11-proto-devel xprop \
+which giflib-devel curl \
+cmake libdwarf-devel libelf-devel libnuma-devel nasm && \
+zypper --non-interactive clean && \
+groupadd -g ${UID_GID} ${DUMMY_USER} && useradd -m -u ${UID_GID} -d /${DUMMY_USER}/ -g ${DUMMY_USER} ${DUMMY_USER} && \
+mkdir -p ${JAVA_HOME}/
